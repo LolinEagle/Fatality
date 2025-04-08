@@ -1,0 +1,8 @@
+[BP]
+[FP]
+[BP],[FP]
+[BP],[BK]
+[FK],[FP]
+left,right,[BP]
+down,up,[FP]
+left,down,right,up
