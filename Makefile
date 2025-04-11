@@ -11,6 +11,10 @@ clean:
 fclean:clean
 	@rm -rf bin
 
-re:clean all
+re:fclean
+	@make all
 
-.PHONY:all clean fclean re
+run:re
+	./bin/ft_ality grammars/mk9.gmr
+
+.PHONY:all clean fclean re run
