@@ -38,9 +38,9 @@ module Automaton = struct
     (* 4 Adds the new transition *)
     { automaton with transitions = (q1, sym, q2) :: automaton.transitions }
 
-  let set_initial_state q automaton =
+  (* let set_initial_state q automaton =
     (* Updates initial state (shallow copy) *)
-    { automaton with initial_state = q }
+    { automaton with initial_state = q } *)
 
   let add_final_state q automaton =
     (* Adds state to final states if not already present *)
@@ -98,24 +98,24 @@ module GrammarParser = struct
     (* automaton: the automaton being constructed *)
     let rec build_transitions current_state ts automaton =
       match ts with
-      | [] -> automaton(* Return automaton when no tokens left *)
-      | t :: rest ->(* Determines next state number: *)
-        let new_state = 
-          match automaton.Automaton.states with
-          (* If no states exist starts at 1, otherwise takes max state + 1 *)
-          | [] -> 1
-          | _ -> List.fold_left max 0 automaton.Automaton.states + 1
-        in
-        let automaton = Automaton.add_transition (current_state, t, new_state) automaton in
-        build_transitions new_state rest automaton(* Recursively processes *)
+      | [] ->(* Mark final state when combo is complete *)
+        Automaton.add_final_state current_state automaton
+      | t :: rest ->(* Check if transition already exists *)
+        let existing = List.find_opt (fun (q, sym, _) -> q = current_state && sym = t) automaton.Automaton.transitions in
+        match existing with
+        | Some (_, _, next_state) ->(* Use existing transition *)
+          build_transitions next_state rest automaton
+        | None ->(* Create new transition *)   
+          let new_state = 
+            match automaton.Automaton.states with
+            (* If no states exist starts at 1, otherwise takes max state + 1 *)
+            | [] -> 1
+            | _ -> List.fold_left max 0 automaton.Automaton.states + 1 
+          in
+          let automaton = Automaton.add_transition (current_state, t, new_state) automaton in
+          build_transitions new_state rest automaton(* Recursively processes *)
     in
-    let start_state = 0 in
-    (* 1 Sets automaton's initial state *)
-    (* 2 Builds transitions from the start state *)
-    (* 3 Marks all states as final (folding through states list) *)
-    let automaton = automaton |> Automaton.set_initial_state start_state in
-    let automaton = build_transitions start_state tokens automaton in
-    List.fold_left (fun acc q -> Automaton.add_final_state q acc) automaton automaton.Automaton.states
+    build_transitions automaton.Automaton.initial_state tokens automaton
 end
 
 module Display = struct
