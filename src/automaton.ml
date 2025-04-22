@@ -3,7 +3,7 @@ type state = int
 type transition = state * symbol * state
   
 (* The automaton record type *)
-type t = {
+type automaton = {
   alphabet: symbol list;
   states: state list;
   initial_state: state;

@@ -3,7 +3,7 @@ type state = int
 type transition = state * symbol * state
 
 (* The automaton record type *)
-type t = {
+type automaton = {
   alphabet: symbol list;
   states: state list;
   initial_state: state;
@@ -12,19 +12,19 @@ type t = {
 }
 
 (* Empty automaton *)
-val empty : t
+val empty : automaton
 
 (* Add a state to the automaton *)
-val add_state : state -> t -> t
+val add_state : state -> automaton -> automaton
 
 (* Add a symbol to the automaton's alphabet *)
-val add_symbol : symbol -> t -> t
+val add_symbol : symbol -> automaton -> automaton
 
 (* Add a transition to the automaton *)
-val add_transition : transition -> t -> t
+val add_transition : transition -> automaton -> automaton
 
 (* Add a final state to the automaton *)
-val add_final_state : state -> t -> t
+val add_final_state : state -> automaton -> automaton
 
 (* Process input against the automaton *)
-val process_input : t -> symbol list -> state -> bool
+val process_input : automaton -> symbol list -> state -> bool
