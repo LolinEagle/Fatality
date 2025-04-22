@@ -1,8 +1,8 @@
-BP
-FP
-BP,FP
-BP,BK
-FK,FP
-left,right,BP
-down,up,FP
-left,down,right,up
+BP=Back Punch
+FP=Front Punch
+BP,FP=Brimstone
+BP,BK=Doom Blade
+FK,FP=Dead End
+left,right,BP=Split Decision
+down,up,FP=Toasty
+left,down,right,up=Stage Fatality

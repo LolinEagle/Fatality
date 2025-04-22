@@ -15,7 +15,7 @@ let process_input_sequence automaton input_sequence =
   let symbols = Parser.tokenize input_sequence in
   (* Processes the tokens, starting from its initial state *)
   let recognized = Automaton.process_input automaton symbols automaton.Automaton.initial_state in
-  if recognized then print_endline (Printf.sprintf "%s recognized" (String.concat " " symbols))
+  if recognized > 0 then Display.print_recognized_move recognized automaton
 
 let draw automaton =
   (* Generate and save a Mermaid diagram of the automaton *)

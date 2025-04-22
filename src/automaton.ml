@@ -1,6 +1,8 @@
+
 type symbol = string
 type state = int
 type transition = state * symbol * state
+type combo = state * string
   
 (* The automaton record type *)
 type automaton = {
@@ -9,6 +11,7 @@ type automaton = {
   initial_state: state;
   final_states: state list;
   transitions: transition list;
+  combo_list: combo list;
 }
 
 let empty = {
@@ -17,6 +20,7 @@ let empty = {
   initial_state = 0;
   final_states = [];
   transitions = [];
+  combo_list = [];
 }
 
 let add_state q automaton =
@@ -42,16 +46,23 @@ let add_final_state q automaton =
   if List.mem q automaton.final_states then automaton
   else { automaton with final_states = q :: automaton.final_states }
 
+let add_combo (state, description) automaton =
+  { automaton with combo_list = (state, description) :: automaton.combo_list }
+
 (* Recursive function to process input symbols against automaton *)
 let rec process_input automaton input current_state =
   match input with
-  (* Base case: if no input left, accept if current state is final *)
-  | [] -> List.mem current_state automaton.final_states
+  (* Base case: if no input left, accept by returning current_state if final *)
+  | [] ->
+    if List.mem current_state automaton.final_states then
+      current_state
+    else
+      0
   (* For each input symbol: *)
   | sym :: rest ->
     (* 1 Looks for valid transition from current state *)
     match List.find_opt (fun (q1, s, _) -> q1 = current_state && s = sym) automaton.transitions with
     (* 2 If found, continues with next state *)
     | Some (_, _, q2) -> process_input automaton rest q2
-    (* 3 If not found, rejects input *)
-    | None -> false
+    (* 3 If not found, rejects input by returning 0 *)
+    | None -> 0
