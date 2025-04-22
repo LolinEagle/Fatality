@@ -31,8 +31,8 @@ let run () =
   ) Automaton.empty grammar_lines in
   
   (* Generate and save a Mermaid diagram of the automaton *)
-  let grammar_name = Filename.basename Sys.argv.(1) |> Filename.remove_extension in
-  Display.generate_mermaid_diagram automaton (grammar_name ^ ".md");
+  let output_file = Filename.remove_extension (Filename.basename Sys.argv.(1)) ^ ".md" in
+  Display.generate_mermaid_diagram automaton output_file;
 
   (* Prints a prompt message *)
   print_endline "Waiting for input (press Ctrl+D to exit):";

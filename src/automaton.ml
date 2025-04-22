@@ -1,14 +1,14 @@
-type symbol = string                    (* representing automaton alphabet *)
-type state = int                        (* Integer representing states *)
-type transition = state * symbol * state(* Tuple *)
+type symbol = string
+type state = int
+type transition = state * symbol * state
   
 (* The automaton record type *)
 type t = {
-  alphabet: symbol list;        (* Current alphabet symbols *)
-  states: state list;           (* All states *)
-  initial_state: state;         (* Initial state *)
-  final_states: state list;     (* Final (accepting) states *)
-  transitions: transition list; (* All transitions *)
+  alphabet: symbol list;
+  states: state list;
+  initial_state: state;
+  final_states: state list;
+  transitions: transition list;
 }
 
 let empty = {
