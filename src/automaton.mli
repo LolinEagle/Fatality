@@ -2,6 +2,7 @@
 type symbol = string
 type state = int
 type transition = state * symbol * state
+type combo = state * string
 
 (* The automaton record type *)
 type t = {
@@ -10,6 +11,7 @@ type t = {
   initial_state: state;
   final_states: state list;
   transitions: transition list;
+  combo_list: combo list;
 }
 
 (* Empty automaton *)
@@ -27,5 +29,8 @@ val add_transition : transition -> t -> t
 (* Add a final state to the automaton *)
 val add_final_state : state -> t -> t
 
+(* Add a combo to the automaton *)
+val add_combo : combo -> t -> t
+
 (* Process input against the automaton *)
-val process_input : t -> symbol list -> state -> bool
+val process_input : t -> symbol list -> state -> state

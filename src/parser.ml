@@ -2,6 +2,9 @@ let tokenize line =
   let rec aux acc current = function
     | [] -> (* When no characters left, add any pending token to accumulator *)
       (if current <> "" then current :: acc else acc)
+    | '=' :: rest ->  (* When we hit =, make the rest a single token *)
+      let rest_str = String.of_seq (List.to_seq ('=' :: rest)) in
+      (rest_str :: current :: acc)
     | ' ' :: rest -> (* Finalize current token and start new empty token *)
       aux (if current <> "" then current :: acc else acc) "" rest
     | ',' :: rest -> (* Treats commas as separators *)
@@ -23,18 +26,23 @@ let parse_grammar_line line automaton =
     | [] -> (* Mark final state when combo is complete *)
       Automaton.add_final_state current_state automaton
     | t :: rest -> (* Check if transition already exists *)
-      let existing = List.find_opt (fun (q, sym, _) -> q = current_state && sym = t) automaton.Automaton.transitions in
-      match existing with
-      | Some (_, _, next_state) -> (* Use existing transition *)
-        build_transitions next_state rest automaton
-      | None -> (* Create new transition *)   
-        let new_state = 
-          match automaton.Automaton.states with
-          (* If no states exist starts at 1, otherwise takes max state + 1 *)
-          | [] -> 1
-          | _ -> List.fold_left max 0 automaton.Automaton.states + 1 
-        in
-        let automaton = Automaton.add_transition (current_state, t, new_state) automaton in
-        build_transitions new_state rest automaton (* Recursively processes *)
+      if String.length t > 0 && t.[0] = '=' then
+        let description = String.sub t 1 (String.length t - 1) in
+        let automaton = Automaton.add_combo (current_state, description) automaton in
+        Automaton.add_final_state current_state automaton
+      else
+        let existing = List.find_opt (fun (q, sym, _) -> q = current_state && sym = t) automaton.Automaton.transitions in
+        match existing with
+        | Some (_, _, next_state) -> (* Use existing transition *)
+          build_transitions next_state rest automaton
+        | None -> (* Create new transition *)   
+          let new_state = 
+            match automaton.Automaton.states with
+            (* If no states exist starts at 1, otherwise takes max state + 1 *)
+            | [] -> 1
+            | _ -> List.fold_left max 0 automaton.Automaton.states + 1 
+          in
+          let automaton = Automaton.add_transition (current_state, t, new_state) automaton in
+          build_transitions new_state rest automaton (* Recursively processes *)
   in
   build_transitions automaton.Automaton.initial_state tokens automaton
