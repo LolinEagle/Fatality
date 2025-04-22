@@ -1,16 +1,17 @@
-type symbol = string                    (* representing automaton alphabet *)
-type state = int                        (* Integer representing states *)
-type transition = state * symbol * state(* Tuple *)
-type combo = state * string             (* Tuple representing combo *)
 
+type symbol = string
+type state = int
+type transition = state * symbol * state
+type combo = state * string
+  
 (* The automaton record type *)
-type t = {
-  alphabet: symbol list;        (* Current alphabet symbols *)
-  states: state list;           (* All states *)
-  initial_state: state;         (* Initial state *)
-  final_states: state list;     (* Final (accepting) states *)
-  transitions: transition list; (* All transitions *)
-  combo_list: combo list;       (* All combo *)
+type automaton = {
+  alphabet: symbol list;
+  states: state list;
+  initial_state: state;
+  final_states: state list;
+  transitions: transition list;
+  combo_list: combo list;
 }
 
 let empty = {
@@ -33,12 +34,12 @@ let add_symbol s automaton =
   else { automaton with alphabet = s :: automaton.alphabet }
 
 let add_transition (q1, sym, q2) automaton =
-  (* Adds a transition while ensuring: *)
-  let automaton = add_state q1 automaton in   (* 1 Source state exists *)
-  let automaton = add_state q2 automaton in   (* 2 Destination state exists *)
-  let automaton = add_symbol sym automaton in (* 3 Symbol is in alphabet *)
-  (* 4 Adds the new transition *)
-  { automaton with transitions = (q1, sym, q2) :: automaton.transitions }
+  (* Add transition after ensuring states and symbol exist *)
+  automaton
+  |> add_state q1
+  |> add_state q2
+  |> add_symbol sym
+  |> fun automaton -> { automaton with transitions = (q1, sym, q2) :: automaton.transitions }
 
 let add_final_state q automaton =
   (* Adds state to final states if not already present *)

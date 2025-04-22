@@ -1,3 +1,4 @@
 (executable
  (public_name ft_ality)
- (name main))
+ (name main)
+ (modules automaton display main parser))
