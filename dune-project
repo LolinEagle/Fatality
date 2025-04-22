@@ -2,7 +2,7 @@
 
 (name ft_ality)
 
-(generate_opam_files true)
+(generate_opam_files false)
 
 (package
  (name ft_ality)
