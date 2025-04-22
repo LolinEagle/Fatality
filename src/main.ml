@@ -20,7 +20,9 @@ let process_input_sequence automaton input_sequence =
 let draw automaton =
   (* Generate and save a Mermaid diagram of the automaton *)
   let output_file = Filename.remove_extension (Filename.basename Sys.argv.(1)) ^ ".md" in
-  Display.generate_mermaid_diagram automaton output_file
+  Display.generate_mermaid_diagram automaton output_file;
+  (* Print the key mappings for the automaton's alphabet *)
+  Display.print_key_mappings automaton.Automaton.alphabet
 
 let game automaton =
   (* Main game loop that waits for user input *)
