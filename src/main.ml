@@ -17,31 +17,34 @@ let process_input_sequence automaton input_sequence =
   let recognized = Automaton.process_input automaton symbols automaton.Automaton.initial_state in
   if recognized then print_endline (Printf.sprintf "%s recognized" (String.concat " " symbols))
 
-let run () =
-  (* Checks if a grammar file was provided as command line argument *)
-  if Array.length Sys.argv <> 2 then (
-    print_endline "Usage: ft_ality grammar_file";
-    exit 1
-  );
-  let grammar_lines = read_grammar_file Sys.argv.(1) in
-  
-  (* Builds an automaton by parsing each grammar line *)
-  let automaton = List.fold_left (fun acc line ->
-    Parser.parse_grammar_line line acc
-  ) Automaton.empty grammar_lines in
-  
+let draw automaton =
   (* Generate and save a Mermaid diagram of the automaton *)
   let output_file = Filename.remove_extension (Filename.basename Sys.argv.(1)) ^ ".md" in
-  Display.generate_mermaid_diagram automaton output_file;
+  Display.generate_mermaid_diagram automaton output_file
 
-  (* Prints a prompt message *)
+let game automaton =
+  (* Main game loop that waits for user input *)
   print_endline "Waiting for input (press Ctrl+D to exit):";
   try
     while true do
       let line = read_line () in
       process_input_sequence automaton line
     done
-  with End_of_file -> () (* Catches the End_of_file exception to exit *)
+  with End_of_file -> ()
 
-let () = run ()
+let build_automaton grammar_lines =
+  (* Builds an automaton by parsing each grammar line *)
+  List.fold_left (fun acc line ->
+    Parser.parse_grammar_line line acc
+  ) Automaton.empty grammar_lines
 
+let () =
+  match Sys.argv with
+  | [| _; grammar_file |] ->
+      let grammar_lines = read_grammar_file grammar_file in
+      let automaton = build_automaton grammar_lines in
+      draw automaton;
+      game automaton
+  | _ ->
+      print_endline "Usage: ft_ality grammar_file";
+      exit 1
