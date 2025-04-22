@@ -43,4 +43,3 @@ let run () =
   with End_of_file -> () (* Catches the End_of_file exception to exit *)
 
 let () = run ()
-
