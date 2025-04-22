@@ -29,7 +29,7 @@ val add_transition : transition -> automaton -> automaton
 val add_final_state : state -> automaton -> automaton
 
 (* Add a combo to the automaton *)
-val add_combo : combo -> t -> t
+val add_combo : combo -> automaton -> automaton
 
 (* Process input against the automaton *)
 val process_input : automaton -> symbol list -> state -> state
