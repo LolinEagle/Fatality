@@ -1,5 +1,3 @@
-(* Interface for the Main module *)
-
 (* Read grammar rules from a file *)
 val read_grammar_file : string -> string list
 

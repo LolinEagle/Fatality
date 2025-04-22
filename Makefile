@@ -5,7 +5,7 @@ all:
 
 clean:
 	@dune clean
-	@rm -rf _build lib doc
+	@rm -rf _build lib doc automaton
 	@echo "Cleaning done"
 
 fclean:clean

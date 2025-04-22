@@ -1,4 +1,3 @@
-(* Interface for Automaton module *)
 type symbol = string
 type state = int
 type transition = state * symbol * state

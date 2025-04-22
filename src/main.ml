@@ -15,7 +15,7 @@ let process_input_sequence automaton input_sequence =
   let symbols = Parser.tokenize input_sequence in
   (* Processes the tokens, starting from its initial state *)
   let recognized = Automaton.process_input automaton symbols automaton.Automaton.initial_state in
-  if recognized then Display.print_recognized_move symbols
+  if recognized then print_endline (Printf.sprintf "%s recognized" (String.concat " " symbols))
 
 let run () =
   (* Checks if a grammar file was provided as command line argument *)
@@ -30,11 +30,12 @@ let run () =
     Parser.parse_grammar_line line acc
   ) Automaton.empty grammar_lines in
   
-  (* Prints the key mappings from the automaton's alphabet *)
-  Display.print_key_mappings automaton.Automaton.alphabet;
-  
-  print_endline "Waiting for input (press Ctrl+D to exit):";
+  (* Generate and save a Mermaid diagram of the automaton *)
+  let grammar_name = Filename.basename Sys.argv.(1) |> Filename.remove_extension in
+  Display.generate_mermaid_diagram automaton (grammar_name ^ ".md");
+
   (* Prints a prompt message *)
+  print_endline "Waiting for input (press Ctrl+D to exit):";
   try
     while true do
       let line = read_line () in
