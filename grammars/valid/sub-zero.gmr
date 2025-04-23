@@ -1,0 +1,26 @@
+# Special Attacks
+D,F,FK=Iceball/Icebeam
+B,F,BK=Slide
+D,B,FP=Ice Clone/Statue
+D,B,FK=Ice Puddle/Ground Freeze
+X-Ray=Deep Freeze
+
+# Kombo Attacks
+FP,FP=Frosty
+FP,FK,F+BK=Cold Feel
+FP,FK,B+BK=Arctic Blast
+B+FP,BP,FP=Ice Pick
+B+FP,BP,BK=Ice Cold
+BP,FP,BP=Frost Bitten
+BP,FP,BK=Ices Up
+F+BK,FP+BP=Tundra Slice
+BP,BP,BP=Winter Blade
+BP,BP,BK=Cold Steel
+FK,F+BK=Chill Out
+
+# Finishing Moves
+B,F,D,F,BK=Have an Ice Day
+D,B,D,F,BP=Spinal Smash
+F,D,F,BP=Spine Rip
+D,B,D,BK=Babality
+F,D,B,BP=Stage Fatality

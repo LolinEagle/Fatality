@@ -1,0 +1,41 @@
+# Special Attacks:
+F,F,BK=Shoulder/Power Charge
+D,B,FK=Lightning/Thunder Storm
+D,B,FP=Arrow Shot/Multi-Arrow
+D,F,FP=Axe Swing/Tomahowk Bash
+D,F,BP=Choke/Strangle
+B,B,BK=(Sticky) Bomb (Close)
+B,B,F,BK=Bomb (Far)
+B,B,FK=(Electro) Net
+B,F,BP=Buzzsaw/Saw Blade
+D,F,FK=Reverse/Donkey Kick
+D,F,FK,BL=Rapdoll/Rapdolls
+D,F,B,BP=Blackhole (Darkness) - In Front
+D,Up=Teleport Slam (Teleport Smash)
+B,F,BK=Shadow (Saibot) Slide
+B,F,FP=Shake/Vibration
+D,B,BK=Teleport/Smokeport
+D,Up,FK=Invisibility/Vanish
+F,B,FK=Smoke/Phase Away
+B,F,FK=Smoke/Phase Towards
+D,B,F,FK=Up Missile (Behind)
+D,F,B,FK=Up Missile (In Front)
+F,F,FK=Ice/Cryo Bomb (Medium)
+B,B,F,FK=Ice/Cryo Bomb (Far)
+D,FK=Divekick/Powerkick (Close)
+D,BK=Divekick/Powerkick (Far)
+
+# X-Ray Attacks:
+F,B,D,FP=Ancestors Call
+B,F,D,FP=Cyberdriver
+B,F,D,BK=Burn Out
+D,B,F,FK=Metal Missile
+D,F,BK=Dragon Fire
+B,F,D,FK=Tricky Lizard
+B,F,D,BP=Scorpion Sting
+
+# Finishing Moves:
+D,F,D,B,BK=Little Of The Top
+D,D,F,B,FP=Ascension
+F,B,F,B,FP=Babality
+D,D,D,BL=Stage Fatality

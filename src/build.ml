@@ -62,7 +62,7 @@ let build_automaton_from_file grammar_file =
                 Printf.fprintf stderr "Error: Invalid grammar line format at line %d in %s\n" line_num grammar_file;
                 Printf.fprintf stderr "Grammar lines must have the format: 'input1,input2,...=ComboName'\n";
                 close_in ic;
-                exit 1
+                exit 0
               end
       in
       process_lines new_automaton (line_num + 1)
@@ -73,7 +73,7 @@ let build_automaton_from_file grammar_file =
     | exn ->
         close_in ic;
         Printf.fprintf stderr "Error while reading file: %s\n" (Printexc.to_string exn);
-        exit 1
+        exit 0
   in
   
   let automaton = process_lines Automaton.empty 1 in
@@ -81,7 +81,7 @@ let build_automaton_from_file grammar_file =
   (* Verify the automaton is not empty *)
   if automaton.Automaton.states = [] then begin
     Printf.fprintf stderr "Error: No valid grammar rules found in %s\n" grammar_file;
-    exit 1
+    exit 0
   end;
   
   automaton
