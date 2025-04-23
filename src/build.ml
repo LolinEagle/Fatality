@@ -43,6 +43,9 @@ let build_automaton_from_file grammar_file =
       exit 1
   in
   
+  (* Track seen combos (sequence of tokens) to detect duplicates *)
+  let seen_combos = Hashtbl.create 50 in
+  
   (* Process each line as we read it, starting with an empty automaton *)
   let rec process_lines automaton line_num =
     try
@@ -55,6 +58,24 @@ let build_automaton_from_file grammar_file =
           automaton (* Return unchanged automaton *)
         else
           let tokens = Parser.tokenize trimmed_line in
+          
+          (* Extract sequence (combo) and action *)
+          let combo_tokens = List.filter (fun t -> String.length t = 0 || t.[0] <> '=') tokens in
+          
+          (* Check for duplicate combos *)
+          let combo_key = String.concat "," combo_tokens in
+          if Hashtbl.mem seen_combos combo_key then begin
+            Printf.fprintf stderr "Error: Duplicate combo '%s' at line %d in %s\n" 
+              combo_key line_num grammar_file;
+            Printf.fprintf stderr "This combo was already defined earlier in the file\n";
+            close_in ic;
+            exit 1
+          end;
+          
+          (* Record combo if not a duplicate *)
+          Hashtbl.add seen_combos combo_key true;
+          
+          (* Continue with token validation and build *)
           match validate_tokens_and_build tokens automaton with
           | Some new_automaton -> new_automaton
           | None ->

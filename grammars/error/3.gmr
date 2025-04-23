@@ -1,0 +1,4 @@
+foo=A
+bar=B
+foo,bar=C
+foo,bar=D
