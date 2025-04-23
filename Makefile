@@ -15,6 +15,6 @@ re:fclean
 	@make all
 
 run:re
-	./bin/ft_ality grammars/mk9.gmr
+	./bin/ft_ality grammars/valid/mk9.gmr
 
 .PHONY:all clean fclean re run

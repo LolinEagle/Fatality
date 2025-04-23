@@ -78,3 +78,11 @@ let generate_mermaid_diagram automaton filename =
   close_out oc;
   
   print_endline (Printf.sprintf "Mermaid diagram saved to %s" filepath)
+
+(* Generate visualization and display key mappings for the automaton *)
+let draw_automaton automaton filename =
+  (* Generate and save a Mermaid diagram of the automaton *)
+  let output_file = Filename.remove_extension (Filename.basename filename) ^ ".md" in
+  generate_mermaid_diagram automaton output_file;
+  (* Print the key mappings for the automaton's alphabet *)
+  print_key_mappings automaton.Automaton.alphabet

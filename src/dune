@@ -1,4 +1,4 @@
 (executable
  (public_name ft_ality)
  (name main)
- (modules automaton display main parser))
+ (modules automaton build display game main parser validate))

@@ -1,3 +1,6 @@
+# comment are allowed
+# empty lines also
+
 BP=Back Punch
 FP=Front Punch
 BP,FP=Brimstone
