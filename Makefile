@@ -18,17 +18,9 @@ run:re
 	./bin/ft_ality grammars/valid/mk9.gmr
 
 test:re
-	@echo "error/0.gmr :"
-	@-./bin/ft_ality grammars/error/0.gmr
-	@echo "error/1.gmr :"
-	@-./bin/ft_ality grammars/error/1.gmr
-	@echo "error/2.gmr :"
-	@-./bin/ft_ality grammars/error/2.gmr
-	@echo "error/duplicate.gmr :"
-	@-./bin/ft_ality grammars/error/duplicate.gmr
-	@echo "error/empty.gmr :"
-	@-./bin/ft_ality grammars/error/empty.gmr
-	@echo "valid/big_mk9.gmr :"
-	@./bin/ft_ality grammars/valid/big_mk9.gmr
+	@for file in grammars/error/*.gmr; do \
+		echo "== $$(basename $$file) =="; \
+		./bin/ft_ality $$file || true; \
+	done
 
 .PHONY:all clean fclean re run test
