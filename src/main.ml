@@ -34,17 +34,15 @@ let game automaton =
     done
   with End_of_file -> ()
 
-let build_automaton grammar_lines =
+let build_automaton grammar_file =
   (* Builds an automaton by parsing each grammar line *)
-  List.fold_left (fun acc line ->
-    Parser.parse_grammar_line line acc
-  ) Automaton.empty grammar_lines
+  let grammar_lines = read_grammar_file grammar_file in
+  List.fold_left (fun acc line -> Parser.parse_grammar_line line acc) Automaton.empty grammar_lines
 
 let () =
   match Sys.argv with
   | [| _; grammar_file |] ->
-      let grammar_lines = read_grammar_file grammar_file in
-      let automaton = build_automaton grammar_lines in
+      let automaton = build_automaton grammar_file in
       draw automaton;
       game automaton
   | _ ->

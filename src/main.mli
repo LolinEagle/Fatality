@@ -11,4 +11,4 @@ val draw : Automaton.automaton -> unit
 val game : Automaton.automaton -> unit
 
 (* Build an automaton from grammar lines *)
-val build_automaton : string list -> Automaton.automaton
+val build_automaton : string -> Automaton.automaton
